@@ -1,0 +1,1041 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.1",
+    "title": "{json:api} A specification for building APIs in JSON",
+    "description": "[README](https://github.com/gilsegura/schemas/blob/ac448520bc1905663732cf70280faa2582919661/README.md)",
+    "contact": {
+      "url": "https://github.com/gilsegura"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/gilsegura/schemas/blob/ac448520bc1905663732cf70280faa2582919661/LICENSE"
+    }
+  },
+  "externalDocs": {
+    "description": "Read more about {json:api} specification here",
+    "url": "https://jsonapi.org/"
+  },
+  "paths": {
+    "/resources": {
+      "get": {
+        "description": "[fetching-resources](https://jsonapi.org/format/#fetching-resources)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accept"
+          },
+          {
+            "$ref": "#/components/parameters/fields"
+          },
+          {
+            "$ref": "#/components/parameters/filter"
+          },
+          {
+            "$ref": "#/components/parameters/include"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "data": [
+                    {
+                      "type": "foobar",
+                      "id": "550e8400-e29b-41d4-a716-446655440000",
+                      "attributes": {
+                        "foo": "Bar"
+                      },
+                      "links": {
+                        "self": "http://example.com/resources/550e8400-e29b-41d4-a716-446655440000"
+                      }
+                    }
+                  ],
+                  "links": {
+                    "self": "http://example.com/resources?page[offset]=3&page[limit]=1",
+                    "first": "http://example.com/resources?page[offset]=1&page[limit]=1",
+                    "prev": "http://example.com/resources?page[offset]=2&page[limit]=1",
+                    "next": "http://example.com/resources?page[offset]=4&page[limit]=1",
+                    "last": "http://example.com/resources?page[offset]=13&page[limit]=1"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      },
+      "post": {
+        "description": "[crud-creating](https://jsonapi.org/format/#crud-creating)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/content-type"
+          },
+          {
+            "$ref": "#/components/parameters/accept"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "v1.1/datum.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/created"
+          },
+          "202": {
+            "$ref": "#/components/responses/accepted"
+          },
+          "204": {
+            "$ref": "#/components/responses/no-content"
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflict"
+          },
+          "415": {
+            "$ref": "#/components/responses/unsupported-media-type"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable-content"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      }
+    },
+    "/resources/{id}":{
+      "get": {
+        "description": "[fetching-resources](https://jsonapi.org/format/#fetching-resources)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "data": {
+                    "type": "foobar",
+                    "id": "550e8400-e29b-41d4-a716-446655440000",
+                    "attributes": {
+                      "foo": "Bar"
+                    },
+                    "links": {
+                      "self": "http://example.com/resources/550e8400-e29b-41d4-a716-446655440000"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      },
+      "patch": {
+        "description": "[crud-updating](https://jsonapi.org/format/#crud-updating)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/content-type"
+          },
+          {
+            "$ref": "#/components/parameters/accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "v1.1/datum.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "data": {
+                    "type": "foobar",
+                    "id": "550e8400-e29b-41d4-a716-446655440000",
+                    "attributes": {
+                      "foo": "Bar"
+                    },
+                    "links": {
+                      "self": "http://example.com/resources/550e8400-e29b-41d4-a716-446655440000"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "$ref": "#/components/responses/accepted"
+          },
+          "204": {
+            "$ref": "#/components/responses/no-content"
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflict"
+          },
+          "415": {
+            "$ref": "#/components/responses/unsupported-media-type"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable-content"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      },
+      "delete": {
+        "description": "[crud-deleting](https://jsonapi.org/format/#crud-deleting)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "meta": {
+                    "copyright": "Copyright 2024 Foo Bar."
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "$ref": "#/components/responses/accepted"
+          },
+          "204": {
+            "$ref": "#/components/responses/no-content"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      }
+    },
+    "/resources/{id}/relationships/{related}":{
+      "get": {
+        "description": "[fetching-relationships](https://jsonapi.org/format/#fetching-relationships)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/related"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "data": {
+                    "type": "example",
+                    "id": "12"
+                  },
+                  "links": {
+                    "self": "/resources/1/relationships/example",
+                    "related": "resources/1/example"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      },
+      "patch": {
+        "description": "[crud-updating-relationships](https://jsonapi.org/format/#crud-updating-relationships)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/content-type"
+          },
+          {
+            "$ref": "#/components/parameters/accept"
+          },
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/related"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "$ref": "v1.1/datum.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Content-Type": {
+                "$ref": "#/components/headers/media-type"
+              }
+            },
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "$ref": "v1.1/schema.json"
+                },
+                "example": {
+                  "jsonapi": {
+                    "version": "1.1"
+                  },
+                  "data": {
+                    "type": "foobar",
+                    "id": "550e8400-e29b-41d4-a716-446655440000",
+                    "attributes": {
+                      "foo": "Bar"
+                    },
+                    "relationships": {
+                      "examples": {
+                        "data": [
+                          { "type": "examples", "id": "2" },
+                          { "type": "examples", "id": "3" }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "$ref": "#/components/responses/accepted"
+          },
+          "204": {
+            "$ref": "#/components/responses/no-content"
+          },
+          "400": {
+            "$ref": "#/components/responses/bad-request"
+          },
+          "404": {
+            "$ref": "#/components/responses/not-found"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbidden"
+          },
+          "405": {
+            "$ref": "#/components/responses/method-not-allowed"
+          },
+          "406": {
+            "$ref": "#/components/responses/not-acceptable"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflict"
+          },
+          "415": {
+            "$ref": "#/components/responses/unsupported-media-type"
+          },
+          "422": {
+            "$ref": "#/components/responses/unprocessable-content"
+          },
+          "default": {
+            "$ref": "#/components/responses/internal-server-error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "created": {
+        "description": "Created",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          },
+          "Location": {
+            "$ref": "#/components/headers/location"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "data": {
+                "type": "foobar",
+                "id": "550e8400-e29b-41d4-a716-446655440000",
+                "attributes": {
+                  "foo": "Bar"
+                },
+                "links": {
+                  "self": "http://example.com/resources/550e8400-e29b-41d4-a716-446655440000"
+                }
+              }
+            }
+          }
+        }
+      },
+      "accepted": {
+        "description": "Accepted",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "meta": {
+                "copyright": "Copyright 2024 Foo Bar."
+              }
+            }
+          }
+        }
+      },
+      "no-content": {
+        "description": "No Content"
+      },
+      "bad-request": {
+        "description": "Bad Request",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "400",
+                  "code": "malformed_content",
+                  "title": "Malformed content.",
+                  "source": {
+                    "pointer": "/data/attribute/foo"
+                  },
+                  "links": {
+                    "about": "http://example.com/errors#malformed-content"
+                  }
+                },
+                {
+                  "status": "400",
+                  "code": "malformed_content",
+                  "title": "Malformed content.",
+                  "source": {
+                    "pointer": "/data/attribute/bar"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "forbidden": {
+        "description": "Forbidden",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "403",
+                  "code": "forbidden"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "not-found": {
+        "description": "Not Found",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "404",
+                  "code": "route_not_found"
+                }
+              ],
+              "links": {
+                "self": "http://example.com/resources"
+              }
+            }
+          }
+        }
+      },
+      "method-not-allowed": {
+        "description": "Method Not Allowed",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "405",
+                  "code": "method_not_allowed"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "not-acceptable": {
+        "description": "Not Acceptable",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "406",
+                  "code": "not_acceptable_media_type",
+                  "title": "Not acceptable media type.",
+                  "detail": "The provided media type does not acceptable.",
+                  "source": {
+                    "header": "Accept"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "conflict": {
+        "description": "Conflict",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "409",
+                  "code": "resource_already_exists"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "unsupported-media-type": {
+        "description": "Unsupported Media Type",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "415",
+                  "code": "unsupported_media_type",
+                  "title": "Unsupported media type.",
+                  "detail": "The provided media type does not supported.",
+                  "source": {
+                    "header": "Content-Type"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "unprocessable-content": {
+        "description": "Unprocessable Content",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "422",
+                  "code": "unprocessable_resource_attribute",
+                  "title": "Unprocessable resource attribute.",
+                  "detail": "The provided \"attribute\" does not valid.",
+                  "source": {
+                    "pointer": "/data/attributes/attribute"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "internal-server-error": {
+        "description": "Internal Server Error",
+        "headers": {
+          "Content-Type": {
+            "$ref": "#/components/headers/media-type"
+          }
+        },
+        "content": {
+          "application/vnd.api+json": {
+            "schema": {
+              "$ref": "v1.1/schema.json"
+            },
+            "example": {
+              "jsonapi": {
+                "version": "1.1"
+              },
+              "errors": [
+                {
+                  "status": "400",
+                  "code": "unrecognized_query_params",
+                  "source": {
+                    "parameter": "included"
+                  }
+                },
+                {
+                  "status": "400",
+                  "code": "malformed_content",
+                  "title": "Malformed content.",
+                  "source": {
+                    "pointer": "/data/type"
+                  },
+                  "links": {
+                    "about": "http://example.com/errors#malformed-content"
+                  }
+                },
+                {
+                  "status": "500",
+                  "title": "An error occurred.",
+                  "detail": "An error occurred while processing message."
+                }
+              ],
+              "links": {
+                "self": "http://example.com/resources"
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "media-type": {
+        "type": "string",
+        "pattern": "^.*application\\/vnd\\.api\\+json(?:\\s*;\\s*(?:ext|profile)\\s*=\\s*\".*\")?$",
+        "example": "application/vnd.api+json"
+      }
+    },
+    "headers": {
+      "media-type": {
+        "description": "[media-type](https://jsonapi.org/format/#jsonapi-media-type)",
+        "schema": {
+          "$ref": "#/components/schemas/media-type"
+        }
+      },
+      "location": {
+        "description": "[rfc-7231](https://datatracker.ietf.org/doc/html/rfc7231#section-6.3.2)",
+        "schema": {
+          "type": "string",
+          "format": "uri-reference",
+          "example": "http://example.com/example/550e8400-e29b-41d4-a716-446655440000"
+        }
+      }
+    },
+    "parameters": {
+      "content-type": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "$ref": "#/components/schemas/media-type"
+        }
+      },
+      "accept": {
+        "name": "Accept",
+        "in": "header",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "$ref": "#/components/schemas/media-type"
+        }
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "related": {
+        "name": "related",
+        "in": "path",
+        "required": true,
+        "style": "simple",
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9](?:[-\\w]*[a-zA-Z0-9])?$"
+        }
+      },
+      "fields": {
+        "description": "[fetching-sparse-fieldsets](https://jsonapi.org/format/#fetching-sparse-fieldsets)",
+        "name": "fields",
+        "in": "query",
+        "required": false,
+        "style": "deepObject",
+        "explode": true,
+        "schema": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z]+$": {
+              "type": "string",
+              "pattern": "^[a-z]+(?:,[a-z]+)*$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "example": {
+          "foobar": "foo,bar"
+        }
+      },
+      "filter": {
+        "description": "[fetching-filtering](https://jsonapi.org/format/#fetching-filtering)",
+        "name": "filter",
+        "in": "query",
+        "required": false,
+        "style": "deepObject",
+        "explode": true,
+        "schema": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z]+$": {
+              "type": "string",
+              "pattern": "^[a-z.]+(?:,[a-z.]+)*$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "example": {
+          "eq:foo": "bar"
+        }
+      },
+      "include": {
+        "description": "[fetching-includes](https://jsonapi.org/format/#fetching-includes)",
+        "name": "include",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "type": "string",
+          "pattern": "^[a-z.]+(?:,[a-z.]+)*$"
+        },
+        "example": "foo.bar,foo"
+      },
+      "sort": {
+        "description": "[fetching-sorting](https://jsonapi.org/format/#fetching-sorting)",
+        "name": "sort",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "schema": {
+          "type": "string",
+          "pattern": "^-?[a-z]+(?:,-?[a-z]+)*"
+        },
+        "example": "-foo,bar"
+      },
+      "page": {
+        "description": "[fetching-pagination](https://jsonapi.org/format/#fetching-pagination)",
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "style": "deepObject",
+        "explode": true,
+        "schema": {
+          "type": "object",
+          "required": [
+            "offset"
+          ],
+          "properties": {
+            "offset": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "limit": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "example": {
+          "offset": 1,
+          "limit": 50
+        }
+      }
+    }
+  }
+}
